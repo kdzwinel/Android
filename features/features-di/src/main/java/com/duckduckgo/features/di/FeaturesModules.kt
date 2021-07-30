@@ -23,17 +23,14 @@ import com.duckduckgo.features.api.FeatureCustomConfigPlugin
 import com.duckduckgo.features.impl.FeatureCustomConfigPluginPoint
 import com.duckduckgo.features.impl.RealFeaturesImpl
 import com.squareup.anvil.annotations.ContributesTo
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoSet
 import dagger.multibindings.Multibinds
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
 @ContributesTo(AppObjectGraph::class)
-abstract class FeaturesAbstractModule {
+abstract class FeaturesBindingModule {
 
     @Multibinds
     abstract fun provideFeatureCustomConfigPlugins(): Set<@JvmSuppressWildcards FeatureCustomConfigPlugin>
