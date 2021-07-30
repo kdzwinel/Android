@@ -17,35 +17,25 @@
 package com.duckduckgo.privacy.config.di
 
 import com.duckduckgo.di.scopes.AppObjectGraph
-import com.duckduckgo.features.api.FeatureCustomConfigPlugin
 import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
-import com.duckduckgo.privacy.config.impl.PrivacyConfigPlugin
 import com.duckduckgo.privacy.config.impl.RealPrivacyConfigDownloader
 import com.duckduckgo.privacy.config.impl.Test
 import com.squareup.anvil.annotations.ContributesTo
+import com.squareup.anvil.annotations.MergeSubcomponent
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoSet
-import dagger.multibindings.Multibinds
-import javax.inject.Singleton
 
-@Module
-@ContributesTo(AppObjectGraph::class)
-class PrivacyConfigModule {
-
-    @Provides
-    fun providePrivacyConfigDownloader(test: Test): PrivacyConfigDownloader {
-        return RealPrivacyConfigDownloader(test)
-    }
-
-    @Provides
-    @Singleton
-    @IntoSet
-    fun providePrivacyConfigPlugin(privacyConfigDownloader: PrivacyConfigDownloader): FeatureCustomConfigPlugin {
-        return PrivacyConfigPlugin(privacyConfigDownloader)
-    }
-
-    @Provides
-    fun provideTest(): Test = Test()
-}
+//@PrivacyConfigScope
+//@MergeSubcomponent(
+//    scope = AppObjectGraph::class
+//)
+//interface TestComponentInterface
+//
+//@Module
+//@ContributesTo(AppObjectGraph::class)
+//class TestModule {
+//
+//    @Provides
+//    fun provideTest(): Test = Test()
+//}

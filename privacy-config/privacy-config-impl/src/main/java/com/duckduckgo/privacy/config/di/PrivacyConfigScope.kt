@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 DuckDuckGo
+ * Copyright (C) 2020. Aitor Viana
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.duckduckgo.privacy.config.di
 
-package com.duckduckgo.privacy.config.impl
+import javax.inject.Scope
 
-import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
-import timber.log.Timber
-
-class RealPrivacyConfigDownloader(private val test: Test) : PrivacyConfigDownloader {
-    override fun download() {
-        Timber.d("Downloading privacy config")
-    }
-}
+@Scope
+@Retention
+annotation class PrivacyConfigScope
