@@ -131,6 +131,11 @@ dependencies {
     implementation project(path: ':common-ui')
     implementation project(path: ':di')
 
+    implementation project(path: ':features-di')
+    api project(path: ':features-api')
+    implementation project(path: ':privacy-config-di')
+    api project(path: ':privacy-config-api')
+
     implementation AndroidX.legacy.supportV4
     debugImplementation Square.leakCanary.android
 

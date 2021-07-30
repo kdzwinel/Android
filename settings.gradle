@@ -7,3 +7,16 @@ include ':app'
 include ':statistics'
 include ':common'
 include ':common-ui'
+include ':features-api'
+include ':features-di'
+include ':features-impl'
+include ':privacy-config-api'
+include ':privacy-config-di'
+include ':privacy-config-impl'
+
+project(':features-api').projectDir = new File('features/features-api')
+project(':features-di').projectDir = new File('features/features-di')
+project(':features-impl').projectDir = new File('features/features-impl')
+project(':privacy-config-api').projectDir = new File('privacy-config/privacy-config-api')
+project(':privacy-config-di').projectDir = new File('privacy-config/privacy-config-di')
+project(':privacy-config-impl').projectDir = new File('privacy-config/privacy-config-impl')
