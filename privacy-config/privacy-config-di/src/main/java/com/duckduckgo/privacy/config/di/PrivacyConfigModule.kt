@@ -16,12 +16,14 @@
 
 package com.duckduckgo.privacy.config.di
 
+import com.duckduckgo.app.global.plugins.PluginPoint
 import com.duckduckgo.di.scopes.AppObjectGraph
 import com.duckduckgo.features.api.FeatureCustomConfigPlugin
 import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
-import com.duckduckgo.privacy.config.impl.PrivacyConfigPlugin
+import com.duckduckgo.privacy.config.plugins.PrivacyConfigPlugin
 import com.duckduckgo.privacy.config.impl.RealPrivacyConfigDownloader
 import com.duckduckgo.privacy.config.network.PrivacyConfigService
+import com.duckduckgo.privacy.config.plugins.PrivacyFeaturePlugin
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
@@ -33,8 +35,8 @@ import javax.inject.Singleton
 class PrivacyConfigModule {
 
     @Provides
-    fun providePrivacyConfigDownloader(privacyConfigService: PrivacyConfigService): PrivacyConfigDownloader {
-        return RealPrivacyConfigDownloader(privacyConfigService)
+    fun providePrivacyConfigDownloader(privacyConfigService: PrivacyConfigService, privacyFeaturePluginPoint: PluginPoint<PrivacyFeaturePlugin>): PrivacyConfigDownloader {
+        return RealPrivacyConfigDownloader(privacyConfigService, privacyFeaturePluginPoint)
     }
 
     @Provides

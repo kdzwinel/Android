@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.duckduckgo.privacy.config.impl
+package com.duckduckgo.privacy.config.plugins
 
 import com.duckduckgo.features.api.FeatureCustomConfigPlugin
 import com.duckduckgo.features.api.FeatureName

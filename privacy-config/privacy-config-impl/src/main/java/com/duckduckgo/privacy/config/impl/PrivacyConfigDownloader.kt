@@ -16,13 +16,16 @@
 
 package com.duckduckgo.privacy.config.impl
 
+import com.duckduckgo.app.global.plugins.PluginPoint
+import com.duckduckgo.features.api.FeatureName
 import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
 import com.duckduckgo.privacy.config.network.PrivacyConfigService
+import com.duckduckgo.privacy.config.plugins.PrivacyFeaturePlugin
 import okhttp3.ResponseBody.Companion.toResponseBody
 import retrofit2.Response
 import timber.log.Timber
 
-class RealPrivacyConfigDownloader(private val privacyConfigService: PrivacyConfigService) : PrivacyConfigDownloader {
+class RealPrivacyConfigDownloader(private val privacyConfigService: PrivacyConfigService, private val privacyFeaturePluginPoint: PluginPoint<PrivacyFeaturePlugin>) : PrivacyConfigDownloader {
     override fun download() {
         Timber.d("Downloading privacy config")
         val response = runCatching {
@@ -32,6 +35,10 @@ class RealPrivacyConfigDownloader(private val privacyConfigService: PrivacyConfi
             Response.error(400, "".toResponseBody(null))
         }
 
-        val test = response
+        response.body()?.features?.forEach { feature ->
+            privacyFeaturePluginPoint.getPlugins().forEach { plugin ->
+                plugin.store(FeatureName(feature.key), feature.value)
+            }
+        }
     }
 }

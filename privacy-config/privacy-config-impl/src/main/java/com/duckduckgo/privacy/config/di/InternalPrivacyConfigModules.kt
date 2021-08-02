@@ -16,13 +16,28 @@
 
 package com.duckduckgo.privacy.config.di
 
+import com.duckduckgo.app.global.plugins.PluginPoint
 import com.duckduckgo.di.scopes.AppObjectGraph
 import com.duckduckgo.privacy.config.network.PrivacyConfigService
+import com.duckduckgo.privacy.config.plugins.PrivacyFeaturePlugin
+import com.duckduckgo.privacy.config.plugins.PrivacyFeaturePluginPoint
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.Multibinds
 import retrofit2.Retrofit
 import javax.inject.Named
+import javax.inject.Singleton
+
+
+@Module
+@ContributesTo(AppObjectGraph::class)
+abstract class PrivacyFeaturesBindingModule {
+
+    @Multibinds
+    abstract fun providePrivacyFeatureStorePlugins(): Set<@JvmSuppressWildcards PrivacyFeaturePlugin>
+
+}
 
 @Module
 @ContributesTo(AppObjectGraph::class)
@@ -30,5 +45,11 @@ class NetworkModule {
     @Provides
     fun providePrivacyConfigService(@Named("api") retrofit: Retrofit): PrivacyConfigService {
         return retrofit.create(PrivacyConfigService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providePrivacyFeaturePluginPoint(customConfigs: Set<@JvmSuppressWildcards PrivacyFeaturePlugin>): PluginPoint<PrivacyFeaturePlugin> {
+        return PrivacyFeaturePluginPoint(customConfigs)
     }
 }
