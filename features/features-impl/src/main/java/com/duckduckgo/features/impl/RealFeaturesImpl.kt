@@ -20,11 +20,16 @@ import com.duckduckgo.app.global.plugins.PluginPoint
 import com.duckduckgo.features.api.Feature
 import com.duckduckgo.features.api.FeatureCustomConfigPlugin
 import com.duckduckgo.features.api.FeatureName
+import com.duckduckgo.features.store.FeatureState
+import com.duckduckgo.features.store.FeaturesDatabase
 import timber.log.Timber
 
-class RealFeaturesImpl(private val featureCustomConfigPluginPoint: PluginPoint<FeatureCustomConfigPlugin>) : Feature {
+class RealFeaturesImpl(featuresDatabase: FeaturesDatabase, private val featureCustomConfigPluginPoint: PluginPoint<FeatureCustomConfigPlugin>) : Feature {
+
+    private val featuresDao = featuresDatabase.featuresDao()
+
     override fun isEnabled(featureName: FeatureName, defaultValue: Boolean) {
-        // TODO return feature flag enable/disabled
+        featuresDao.get(featureName.value)
     }
 
     override fun downloadConfigs() {
@@ -32,7 +37,10 @@ class RealFeaturesImpl(private val featureCustomConfigPluginPoint: PluginPoint<F
         Timber.d("FeatureCustomConfigPluginPoint size is ${featureCustomConfigPluginPoint.getPlugins().size}")
         featureCustomConfigPluginPoint.getPlugins().forEach { plugin ->
             val features = plugin.download()
-            // TODO store features
+            features.forEach { feature ->
+                val featureState = FeatureState(feature.first.value, feature.second)
+                featuresDao.insert(featureState)
+            }
         }
     }
 }

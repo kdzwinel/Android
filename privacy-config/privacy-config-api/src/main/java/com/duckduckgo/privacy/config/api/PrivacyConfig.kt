@@ -16,10 +16,8 @@
 
 package com.duckduckgo.privacy.config.api
 
-interface PrivacyConfig {
-    fun test()
-}
+import com.duckduckgo.features.api.FeatureName
 
 interface PrivacyConfigDownloader {
-    fun download()
+    fun download() : List<Pair<FeatureName, Boolean>>
 }

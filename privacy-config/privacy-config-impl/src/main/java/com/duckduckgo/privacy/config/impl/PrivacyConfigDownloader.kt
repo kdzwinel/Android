@@ -26,7 +26,7 @@ import retrofit2.Response
 import timber.log.Timber
 
 class RealPrivacyConfigDownloader(private val privacyConfigService: PrivacyConfigService, private val privacyFeaturePluginPoint: PluginPoint<PrivacyFeaturePlugin>) : PrivacyConfigDownloader {
-    override fun download() {
+    override fun download() : List<Pair<FeatureName, Boolean>> {
         Timber.d("Downloading privacy config")
         val response = runCatching {
             privacyConfigService.privacyConfig().execute()
@@ -35,10 +35,15 @@ class RealPrivacyConfigDownloader(private val privacyConfigService: PrivacyConfi
             Response.error(400, "".toResponseBody(null))
         }
 
+        val features = mutableListOf<Pair<FeatureName, Boolean>>()
+
         response.body()?.features?.forEach { feature ->
             privacyFeaturePluginPoint.getPlugins().forEach { plugin ->
-                plugin.store(FeatureName(feature.key), feature.value)
+                val enabled = plugin.store(FeatureName(feature.key), feature.value)
+                features.add(FeatureName(feature.key) to enabled)
             }
         }
+
+        return features.toList()
     }
 }

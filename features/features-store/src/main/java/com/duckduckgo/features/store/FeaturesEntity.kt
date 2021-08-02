@@ -14,18 +14,13 @@
  * limitations under the License.
  */
 
-package com.duckduckgo.privacy.config.plugins
+package com.duckduckgo.features.store
 
-import com.duckduckgo.features.api.FeatureCustomConfigPlugin
-import com.duckduckgo.features.api.FeatureName
-import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
-import timber.log.Timber
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-class PrivacyConfigPlugin(private val privacyConfigDownloader: PrivacyConfigDownloader) : FeatureCustomConfigPlugin {
-
-    override fun download(): List<Pair<FeatureName, Boolean>> {
-        Timber.d("Download from privacy config plugin")
-        return privacyConfigDownloader.download()
-    }
-
-}
+@Entity(tableName = "features")
+data class FeatureState(
+    @PrimaryKey val name: String,
+    val enabled: Boolean
+)

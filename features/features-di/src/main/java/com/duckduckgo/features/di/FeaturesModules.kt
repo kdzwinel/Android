@@ -16,12 +16,14 @@
 
 package com.duckduckgo.features.di
 
+import android.content.Context
 import com.duckduckgo.app.global.plugins.PluginPoint
 import com.duckduckgo.di.scopes.AppObjectGraph
 import com.duckduckgo.features.api.Feature
 import com.duckduckgo.features.api.FeatureCustomConfigPlugin
 import com.duckduckgo.features.impl.FeatureCustomConfigPluginPoint
 import com.duckduckgo.features.impl.RealFeaturesImpl
+import com.duckduckgo.features.store.FeaturesDatabase
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
@@ -42,13 +44,19 @@ abstract class FeaturesBindingModule {
 class FeaturesModule {
 
     @Provides
-    fun providePrivacyConfigPlugin(pluginPoint: PluginPoint<FeatureCustomConfigPlugin>): Feature {
-        return RealFeaturesImpl(pluginPoint)
+    fun providePrivacyConfigPlugin(featuresDatabase: FeaturesDatabase, pluginPoint: PluginPoint<FeatureCustomConfigPlugin>): Feature {
+        return RealFeaturesImpl(featuresDatabase, pluginPoint)
     }
 
     @Provides
     @Singleton
     fun provideFeatureCustomConfigPluginPoint(customConfigs: Set<@JvmSuppressWildcards FeatureCustomConfigPlugin>): PluginPoint<FeatureCustomConfigPlugin> {
         return FeatureCustomConfigPluginPoint(customConfigs)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFeaturesDatabase(context: Context): FeaturesDatabase {
+        return FeaturesDatabase.getInstance(context)
     }
 }

@@ -14,18 +14,27 @@
  * limitations under the License.
  */
 
-package com.duckduckgo.privacy.config.plugins
+package com.duckduckgo.features.store
 
-import com.duckduckgo.features.api.FeatureCustomConfigPlugin
-import com.duckduckgo.features.api.FeatureName
-import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
-import timber.log.Timber
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
-class PrivacyConfigPlugin(private val privacyConfigDownloader: PrivacyConfigDownloader) : FeatureCustomConfigPlugin {
+@Dao
+interface FeaturesDao {
 
-    override fun download(): List<Pair<FeatureName, Boolean>> {
-        Timber.d("Download from privacy config plugin")
-        return privacyConfigDownloader.download()
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(state: FeatureState)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(state: FeatureState)
+
+    @Query("select * from features")
+    fun get(): Flow<FeatureState>
+
+    @Query("select enabled from features where name = :name")
+    fun get(name: String): Boolean
 }

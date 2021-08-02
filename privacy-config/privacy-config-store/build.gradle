@@ -17,31 +17,30 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'com.squareup.anvil'
-    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 apply from: "$rootProject.projectDir/gradle/android-library.gradle"
 
 dependencies {
-    implementation project(path: ':di')
-    implementation project(path: ':common')
-
-    api project(path: ':features-api')
-    implementation project(path: ':features-impl')
-    api project(path: ':features-store')
-
-    implementation Google.dagger
 
     implementation Kotlin.stdlib.jdk7
-    implementation AndroidX.appCompat
-    implementation Google.android.material
+    implementation AndroidX.core.ktx
+
     implementation JakeWharton.timber
 
-}
+    // Room
+    implementation AndroidX.room.runtime
+    implementation AndroidX.room.rxJava2
+    implementation AndroidX.room.ktx
+    kapt AndroidX.room.compiler
+    testImplementation AndroidX.room.testing
+    androidTestImplementation AndroidX.room.testing
 
-android {
-    anvil {
-        generateDaggerFactories = true // default is false
-    }
+    testImplementation "junit:junit:_"
+    androidTestImplementation AndroidX.test.runner
+    androidTestImplementation AndroidX.test.rules
+    androidTestUtil AndroidX.test.orchestrator
+    androidTestImplementation Testing.mockito.android
+    androidTestImplementation Testing.mockito.kotlin
 }

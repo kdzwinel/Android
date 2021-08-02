@@ -27,6 +27,9 @@ java {
 }
 
 dependencies {
+
+    api project(path: ':features-api')
+
     implementation Google.dagger
     implementation Kotlin.stdlib.jdk7
 }

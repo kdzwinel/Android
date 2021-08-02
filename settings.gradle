@@ -10,13 +10,17 @@ include ':common-ui'
 include ':features-api'
 include ':features-di'
 include ':features-impl'
+include ':features-store'
 include ':privacy-config-api'
 include ':privacy-config-di'
 include ':privacy-config-impl'
+include ':privacy-config-store'
 
 project(':features-api').projectDir = new File('features/features-api')
 project(':features-di').projectDir = new File('features/features-di')
 project(':features-impl').projectDir = new File('features/features-impl')
+project(':features-store').projectDir = new File('features/features-store')
 project(':privacy-config-api').projectDir = new File('privacy-config/privacy-config-api')
 project(':privacy-config-di').projectDir = new File('privacy-config/privacy-config-di')
 project(':privacy-config-impl').projectDir = new File('privacy-config/privacy-config-impl')
+project(':privacy-config-store').projectDir = new File('privacy-config/privacy-config-store')
