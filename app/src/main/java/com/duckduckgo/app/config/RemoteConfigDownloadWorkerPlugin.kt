@@ -20,15 +20,18 @@ import androidx.work.ListenableWorker
 import com.duckduckgo.app.global.plugins.worker.WorkerInjectorPlugin
 import com.duckduckgo.di.scopes.AppObjectGraph
 import com.duckduckgo.features.api.Feature
+import com.duckduckgo.privacy.config.impl.Test
 import com.squareup.anvil.annotations.ContributesMultibinding
 import timber.log.Timber
 import javax.inject.Inject
 
 @ContributesMultibinding(AppObjectGraph::class)
 class RemoteConfigDownloadWorkerPlugin @Inject constructor(
-    private val feature: Feature
+    private val feature: Feature,
+    private val test: Test
 ) : WorkerInjectorPlugin {
     override fun inject(worker: ListenableWorker): Boolean {
+        test.test()
         if (worker is RemoteConfigDownloadWorker) {
             worker.feature = feature
             Timber.v("Injecting dependencies for PrivacyConfigDownloadWorker")

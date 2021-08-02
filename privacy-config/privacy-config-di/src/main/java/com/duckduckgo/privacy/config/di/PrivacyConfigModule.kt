@@ -46,6 +46,4 @@ class PrivacyConfigModule {
         return PrivacyConfigPlugin(privacyConfigDownloader)
     }
 
-    @Provides
-    fun provideTest(): Test = Test()
 }

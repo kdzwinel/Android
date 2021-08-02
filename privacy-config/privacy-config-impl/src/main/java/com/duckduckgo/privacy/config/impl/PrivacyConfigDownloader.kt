@@ -18,9 +18,11 @@ package com.duckduckgo.privacy.config.impl
 
 import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
 import timber.log.Timber
+import javax.inject.Inject
 
 class RealPrivacyConfigDownloader(private val test: Test) : PrivacyConfigDownloader {
     override fun download() {
         Timber.d("Downloading privacy config")
+        test.test()
     }
 }

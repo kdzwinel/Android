@@ -17,7 +17,11 @@
 package com.duckduckgo.privacy.config.impl
 
 import com.squareup.anvil.annotations.ContributesTo
+import timber.log.Timber
 import javax.inject.Inject
 
-open class Test {
+class Test {
+    internal fun test() {
+        Timber.d("This is a test")
+    }
 }

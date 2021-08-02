@@ -17,6 +17,7 @@
 package com.duckduckgo.privacy.config.di
 
 import com.duckduckgo.di.scopes.AppObjectGraph
+import com.duckduckgo.di.scopes.PrivacyConfigObjectGraph
 import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
 import com.duckduckgo.privacy.config.impl.RealPrivacyConfigDownloader
 import com.duckduckgo.privacy.config.impl.Test
@@ -28,14 +29,19 @@ import dagger.Provides
 
 //@PrivacyConfigScope
 //@MergeSubcomponent(
-//    scope = AppObjectGraph::class
+//    scope = PrivacyConfigObjectGraph::class
 //)
-//interface TestComponentInterface
-//
-//@Module
-//@ContributesTo(AppObjectGraph::class)
-//class TestModule {
-//
-//    @Provides
-//    fun provideTest(): Test = Test()
+//interface TestComponentInterface {
+//    @ContributesTo(AppObjectGraph::class)
+//    interface Abc {
+//        val test: Test
+//    }
 //}
+
+@Module
+@ContributesTo(AppObjectGraph::class)
+class TestModule {
+
+    @Provides
+    fun provideTest(): Test = Test()
+}
