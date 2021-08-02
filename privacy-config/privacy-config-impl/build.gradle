@@ -28,6 +28,7 @@ dependencies {
     implementation project(path: ':common')
     implementation project(path: ':features-api')
     implementation project(path: ':privacy-config-api')
+    implementation project(path: ':privacy-config-store')
 
     implementation Kotlin.stdlib.jdk7
     implementation AndroidX.appCompat
@@ -41,6 +42,13 @@ dependencies {
     implementation Google.dagger
 
     implementation AndroidX.core.ktx
+
+    // Room
+    implementation AndroidX.room.runtime
+    implementation AndroidX.room.rxJava2
+    implementation AndroidX.room.ktx
+    testImplementation AndroidX.room.testing
+    androidTestImplementation AndroidX.room.testing
 }
 
 android {

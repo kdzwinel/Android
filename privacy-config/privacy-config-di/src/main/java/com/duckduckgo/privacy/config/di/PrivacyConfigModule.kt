@@ -16,6 +16,7 @@
 
 package com.duckduckgo.privacy.config.di
 
+import android.content.Context
 import com.duckduckgo.app.global.plugins.PluginPoint
 import com.duckduckgo.di.scopes.AppObjectGraph
 import com.duckduckgo.features.api.FeatureCustomConfigPlugin
@@ -24,6 +25,7 @@ import com.duckduckgo.privacy.config.plugins.PrivacyConfigPlugin
 import com.duckduckgo.privacy.config.impl.RealPrivacyConfigDownloader
 import com.duckduckgo.privacy.config.network.PrivacyConfigService
 import com.duckduckgo.privacy.config.plugins.PrivacyFeaturePlugin
+import com.duckduckgo.privacy.config.store.PrivacyConfigDatabase
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
@@ -46,4 +48,9 @@ class PrivacyConfigModule {
         return PrivacyConfigPlugin(privacyConfigDownloader)
     }
 
+    @Singleton
+    @Provides
+    fun providePrivacyConfigDatabase(context: Context): PrivacyConfigDatabase {
+        return PrivacyConfigDatabase.getInstance(context)
+    }
 }

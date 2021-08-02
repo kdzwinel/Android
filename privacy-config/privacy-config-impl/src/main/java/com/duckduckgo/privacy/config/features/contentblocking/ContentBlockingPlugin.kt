@@ -19,20 +19,37 @@ package com.duckduckgo.privacy.config.features.contentblocking
 import com.duckduckgo.di.scopes.AppObjectGraph
 import com.duckduckgo.features.api.FeatureName
 import com.duckduckgo.privacy.config.plugins.PrivacyFeaturePlugin
+import com.duckduckgo.privacy.config.store.ContentBlockingException
+import com.duckduckgo.privacy.config.store.PrivacyConfigDatabase
 import com.squareup.anvil.annotations.ContributesMultibinding
 import org.json.JSONObject
 import timber.log.Timber
 import javax.inject.Inject
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 
 @ContributesMultibinding(AppObjectGraph::class)
 class ContentBlockingPlugin @Inject constructor(
-
+    privacyConfigDatabase: PrivacyConfigDatabase
 ) : PrivacyFeaturePlugin {
+
+    private val contentBlockingDao = privacyConfigDatabase.contentBlockingDao()
 
     override fun store(featureName: FeatureName, jsonObject: JSONObject?): Boolean {
         if (featureName.value == this.featureName.value) {
-            Timber.d("MARCOS works!~")
-            return true
+            val contentBlockingExceptions = mutableListOf<ContentBlockingException>()
+            Timber.d("MARCOS works!")
+            val moshi = Moshi.Builder().build()
+            val jsonAdapter: JsonAdapter<ContentBlocking> =
+                moshi.adapter(ContentBlocking::class.java)
+
+            val contentBlocking: ContentBlocking? = jsonAdapter.fromJson(jsonObject.toString())
+            contentBlocking?.exceptions?.map {
+                contentBlockingExceptions.add(ContentBlockingException(it.domain, it.reason))
+            }
+            contentBlockingDao.deleteAll()
+            contentBlockingDao.insertAll(contentBlockingExceptions)
+            return contentBlocking?.state == "enabled"
         }
         return false
     }

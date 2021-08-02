@@ -29,6 +29,7 @@ dependencies {
     api project(path: ':features-api')
     api project(path: ':privacy-config-api')
     api project(path: ':privacy-config-impl')
+    api project(path: ':privacy-config-store')
 
     implementation Google.dagger
 
