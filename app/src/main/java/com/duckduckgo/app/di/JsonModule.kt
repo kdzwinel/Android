@@ -16,6 +16,7 @@
 
 package com.duckduckgo.app.di
 
+import com.duckduckgo.app.global.api.JSONObjectAdapter
 import com.duckduckgo.app.httpsupgrade.api.HttpsFalsePositivesJsonAdapter
 import com.duckduckgo.app.privacy.api.TermsOfServiceListAdapter
 import com.duckduckgo.app.trackerdetection.api.ActionJsonAdapter
@@ -33,5 +34,6 @@ class JsonModule {
         .add(ActionJsonAdapter())
         .add(HttpsFalsePositivesJsonAdapter())
         .add(TermsOfServiceListAdapter())
+        .add(JSONObjectAdapter())
         .build()
 }

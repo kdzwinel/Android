@@ -35,6 +35,9 @@ dependencies {
     implementation AndroidX.constraintLayout
     implementation JakeWharton.timber
 
+    implementation Square.retrofit2.converter.moshi
+    implementation Square.okHttp3.okHttp
+
     implementation Google.dagger
 
     implementation AndroidX.core.ktx

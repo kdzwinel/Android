@@ -21,13 +21,11 @@ import com.duckduckgo.features.api.FeatureCustomConfigPlugin
 import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
 import com.duckduckgo.privacy.config.impl.PrivacyConfigPlugin
 import com.duckduckgo.privacy.config.impl.RealPrivacyConfigDownloader
-import com.duckduckgo.privacy.config.impl.Test
+import com.duckduckgo.privacy.config.network.PrivacyConfigService
 import com.squareup.anvil.annotations.ContributesTo
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoSet
-import dagger.multibindings.Multibinds
 import javax.inject.Singleton
 
 @Module
@@ -35,8 +33,8 @@ import javax.inject.Singleton
 class PrivacyConfigModule {
 
     @Provides
-    fun providePrivacyConfigDownloader(test: Test): PrivacyConfigDownloader {
-        return RealPrivacyConfigDownloader(test)
+    fun providePrivacyConfigDownloader(privacyConfigService: PrivacyConfigService): PrivacyConfigDownloader {
+        return RealPrivacyConfigDownloader(privacyConfigService)
     }
 
     @Provides

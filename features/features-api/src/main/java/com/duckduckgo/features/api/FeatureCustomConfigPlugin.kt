@@ -17,5 +17,5 @@
 package com.duckduckgo.features.api
 
 interface FeatureCustomConfigPlugin {
-    fun download() : List<Pair<FeatureName, Boolean>>
+    fun download(): List<Pair<FeatureName, Boolean>>
 }

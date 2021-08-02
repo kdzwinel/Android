@@ -17,31 +17,18 @@
 package com.duckduckgo.privacy.config.di
 
 import com.duckduckgo.di.scopes.AppObjectGraph
-import com.duckduckgo.di.scopes.PrivacyConfigObjectGraph
-import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
-import com.duckduckgo.privacy.config.impl.RealPrivacyConfigDownloader
-import com.duckduckgo.privacy.config.impl.Test
+import com.duckduckgo.privacy.config.network.PrivacyConfigService
 import com.squareup.anvil.annotations.ContributesTo
-import com.squareup.anvil.annotations.MergeSubcomponent
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
-
-//@PrivacyConfigScope
-//@MergeSubcomponent(
-//    scope = PrivacyConfigObjectGraph::class
-//)
-//interface TestComponentInterface {
-//    @ContributesTo(AppObjectGraph::class)
-//    interface Abc {
-//        val test: Test
-//    }
-//}
+import retrofit2.Retrofit
+import javax.inject.Named
 
 @Module
 @ContributesTo(AppObjectGraph::class)
-class TestModule {
-
+class NetworkModule {
     @Provides
-    fun provideTest(): Test = Test()
+    fun providePrivacyConfigService(@Named("api") retrofit: Retrofit): PrivacyConfigService {
+        return retrofit.create(PrivacyConfigService::class.java)
+    }
 }

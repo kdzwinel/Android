@@ -21,7 +21,7 @@ import com.duckduckgo.features.api.FeatureName
 import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
 import timber.log.Timber
 
-class PrivacyConfigPlugin(private val privacyConfigDownloader: PrivacyConfigDownloader): FeatureCustomConfigPlugin {
+class PrivacyConfigPlugin(private val privacyConfigDownloader: PrivacyConfigDownloader) : FeatureCustomConfigPlugin {
 
     override fun download(): List<Pair<FeatureName, Boolean>> {
         Timber.d("Download from privacy config plugin")

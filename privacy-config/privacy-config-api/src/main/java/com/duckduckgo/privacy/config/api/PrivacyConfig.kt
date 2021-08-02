@@ -16,7 +16,6 @@
 
 package com.duckduckgo.privacy.config.api
 
-
 interface PrivacyConfig {
     fun test()
 }

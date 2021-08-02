@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package com.duckduckgo.privacy.config.impl
+package com.duckduckgo.privacy.config.network
 
-import com.squareup.anvil.annotations.ContributesTo
-import timber.log.Timber
-import javax.inject.Inject
+import com.duckduckgo.privacy.config.models.JsonPrivacyConfig
+import retrofit2.Call
+import retrofit2.http.GET
 
-class Test {
-    internal fun test() {
-        Timber.d("This is a test")
-    }
+interface PrivacyConfigService {
+    @GET("https://staticcdn.duckduckgo.com/trackerblocking/config/v1/android-config.json")
+    fun privacyConfig(): Call<JsonPrivacyConfig>
 }

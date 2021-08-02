@@ -22,9 +22,9 @@ import com.duckduckgo.features.api.FeatureCustomConfigPlugin
 import com.duckduckgo.features.api.FeatureName
 import timber.log.Timber
 
-class RealFeaturesImpl(private val featureCustomConfigPluginPoint: PluginPoint<FeatureCustomConfigPlugin>): Feature {
+class RealFeaturesImpl(private val featureCustomConfigPluginPoint: PluginPoint<FeatureCustomConfigPlugin>) : Feature {
     override fun isEnabled(featureName: FeatureName, defaultValue: Boolean) {
-       // TODO return feature flag enable/disabled
+        // TODO return feature flag enable/disabled
     }
 
     override fun downloadConfigs() {

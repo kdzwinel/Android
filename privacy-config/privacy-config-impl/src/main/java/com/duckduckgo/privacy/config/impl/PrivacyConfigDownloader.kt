@@ -17,12 +17,21 @@
 package com.duckduckgo.privacy.config.impl
 
 import com.duckduckgo.privacy.config.api.PrivacyConfigDownloader
+import com.duckduckgo.privacy.config.network.PrivacyConfigService
+import okhttp3.ResponseBody.Companion.toResponseBody
+import retrofit2.Response
 import timber.log.Timber
-import javax.inject.Inject
 
-class RealPrivacyConfigDownloader(private val test: Test) : PrivacyConfigDownloader {
+class RealPrivacyConfigDownloader(private val privacyConfigService: PrivacyConfigService) : PrivacyConfigDownloader {
     override fun download() {
         Timber.d("Downloading privacy config")
-        test.test()
+        val response = runCatching {
+            privacyConfigService.privacyConfig().execute()
+        }.getOrElse {
+            Timber.w("Error downloading tracker rules list: $it")
+            Response.error(400, "".toResponseBody(null))
+        }
+
+        val test = response
     }
 }
